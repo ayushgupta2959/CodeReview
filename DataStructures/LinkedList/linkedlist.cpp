@@ -41,6 +41,7 @@ public:
         Node *temp1 = temp->next;
         temp->next = temp->next->next;
         delete(temp1);
+        n--;
     }
     void display(){
         Node *x = head;
@@ -54,10 +55,10 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     LinkedList ll;
-    //ll.insert(0,1);
-    //ll.insert(1,2);
-    //ll.insert(0,-1);
-    //ll.display();
+    ll.insert(0,1);
+    ll.insert(1,2);
+    ll.insert(0,-1);
+    ll.display();
     ll.remove(0);
     ll.display();
     return 0;

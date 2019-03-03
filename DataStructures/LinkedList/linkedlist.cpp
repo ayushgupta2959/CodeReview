@@ -21,7 +21,7 @@ public:
     }
     //insert new Node at index i
     void insert(int i,int dta){
-        if(i>n) {cout<<"Intermediate nodes not initialized\n"; return; }
+        if(i>n) {cout<<"Intermediate nodes not initialized\nSize of list: "<<n; return; }
         n++;
         Node *temp = head;
         if(head==NULL){head = new Node(dta,NULL); return;}
@@ -49,7 +49,6 @@ public:
         while(x) {cout<<x->data<<" -> "; x = x->next;}
         cout<<"null\n";
     }
-
 };
 int main(){
     ios_base::sync_with_stdio(false);

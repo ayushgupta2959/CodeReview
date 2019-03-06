@@ -70,14 +70,14 @@ public:
     }
 
     //traversal
-    void dfs(Node *x){
+    void inorder(Node *x){
         if(x==NULL) return;
-        dfs(x->lc);
+        inorder(x->lc);
         cout<<x->data<<" ";
-        dfs(x->rc);
+        inorder(x->rc);
     }
-    void display_dfs(){
-        dfs(root);
+    void display_inorder(){
+        inorder(root);
         cout<<"\n";
     }
     /*void display_bfs(){
@@ -92,7 +92,7 @@ int main(){
     cin.tie(NULL);
     CompleteBinaryTree a;
     a.insert(1);
-    //a.display_dfs();
+    //a.display_inorder();
     //a.remove(1);
     a.insert(2);
     a.insert(3);
@@ -103,15 +103,15 @@ int main(){
     a.insert(8);
     a.insert(9);
     a.insert(9);
-    a.display_dfs();
+    a.display_inorder();
     a.remove(8);
-    a.display_dfs();
+    a.display_inorder();
     a.remove(1);
-    a.display_dfs();
+    a.display_inorder();
     a.remove(2);
-    a.display_dfs();
+    a.display_inorder();
     a.remove(3);
-    a.display_dfs();
+    a.display_inorder();
     a.remove(4);
     a.remove(5);
     a.remove(6);
@@ -119,6 +119,6 @@ int main(){
     a.remove(9);
     a.remove(5);
 
-    a.display_dfs();
+    a.display_inorder();
     return 0;
 }

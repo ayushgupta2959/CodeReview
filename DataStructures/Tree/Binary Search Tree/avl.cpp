@@ -7,25 +7,15 @@ height of null nodes is -1
 */
 #include<bits\stdc++.h>
 using namespace std;
-class Data{
-public:
-    int data;
-    Data(int data){
-        this->data = data;
-    }
-    int compare(Data a){
-        if(this->data < a.data) return -1;
-        else if(this->data > a.data) return 1;
-        else return 0;
-    }
-};
+
+template <class T>
 class Node{
 public:
-    Data data;
+    T data;
     Node *lc;
     Node *rc;
     int h;
-    Node(Data data,Node *lc,Node *rc){
+    Node(T data,Node *lc,Node *rc){
         this->data = data;
         this->lc = lc;
         this->rc = rc;
@@ -36,32 +26,29 @@ public:
         else return this->h;
     }
 };
+template <class T>
 class AVL{
 private:
-    Node *root;
+    Node<T> *root;
     int n;
 public:
     AVL(){
         root=NULL;
         n=0;
     }
-    Data make_data(int dta){
-        Data d(dta);
-        return d;
-    }
-    Node* insert(Node *x,Data dta){
-        if(x==NULL) return new Node(dta,NULL,NULL);
-        if(x->data.compare(dta)<0)x->lc = insert(x->lc,dta);
-        else if(x->data.compare(dta)>0)x->rc = insert(x->rc,dta);
+    Node<T>* insert(Node<T> *x,T dta){
+        if(x==NULL) return new Node<T>(dta,NULL,NULL);
+        if(x->data>dta)x->lc = insert(x->lc,dta);
+        else if(x->data<dta)x->rc = insert(x->rc,dta);
         if(abs(x->lc->height() - x->rc->height())>1) x = balance(x);
         x->h = max(x->lc->height(),x->rc->height()) + 1;
         return x;
     }
-    void insert(int dta){
-        root = insert(root,make_data(dta));
+    void insert(T dta){
+        root = insert(root,dta);
         n++;
     }
-    Node* balance(Node *x){
+    Node<T>* balance(Node<T> *x){
         if(x->lc->height() - x->rc->height()>0){
             if((x->lc->lc->height()-x->lc->rc->height())>0) x = llc(x);
             else                                            x = lrc(x);
@@ -73,57 +60,58 @@ public:
         return x;
     }
 
-    Node* llc(Node *x){
+    Node<T>* llc(Node<T> *x){
         x = right_rotate(x);
         return x;
     }
-    Node* lrc(Node* x){
+    Node<T>* lrc(Node<T> *x){
         x->lc = left_rotate(x->lc);
         x = right_rotate(x);
         return x;
     }
-    Node* rrc(Node *x){
+    Node<T>* rrc(Node<T> *x){
         x = left_rotate(x);
         return x;
     }
 
-    Node* rlc(Node* x){
+    Node<T>* rlc(Node<T> *x){
         x->rc = right_rotate(x->rc);
         x = left_rotate(x);
         return x;
     }
-    Node* left_rotate(Node* parent){
-        Node* child = parent->rc;
+    Node<T>* left_rotate(Node<T> *parent){
+        Node<T> *child = parent->rc;
         parent->rc = child->lc;
         child->lc = parent;
         parent->h = max(parent->lc->height(),parent->rc->height()) + 1;
         child->h = max(child->lc->height(),child->rc->height()) + 1;
         return child;
     }
-    Node* right_rotate(Node* parent){
-        Node* child = parent->lc;
+    Node<T>* right_rotate(Node<T> *parent){
+        Node<T> *child = parent->lc;
         parent->lc = child->rc;
         child->rc = parent;
         parent->h = max(parent->lc->height(),parent->rc->height()) + 1;
         child->h = max(child->lc->height(),child->rc->height()) + 1;
         return child;
     }
-    /*Node* remove(int dta){
+    /*Node<T>* remove(int dta){
         if()
     }*/
-    void inorder(Node *x){
+    void inorder(Node<T> *x){
         if(x==NULL) return;
         inorder(x->lc);
-        cout<<"("<<x->data->data<<","<<x->height()<<") ";
+        cout<<"("<<x->data<<","<<x->height()<<") ";
     }
     void display_inorder(){
         inorder(root);
+        cout<<"\n";
     }
 };
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    AVL a;
+    AVL<int> a;
     a.insert(1);
     a.display_inorder();
     a.insert(2);

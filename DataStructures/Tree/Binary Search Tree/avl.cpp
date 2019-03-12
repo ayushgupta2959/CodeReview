@@ -48,12 +48,6 @@ public:
         root = insert(root,dta);
         n++;
     }
-    Node<T>* inorder_successor(Node<T> *x){
-        if(x->rc==NULL) return NULL;
-        x = x->rc;
-        while(x->lc!=NULL) x = x->lc;
-        return x;
-    }
     Node<T>* remove(Node<T> *x,T dta){
         if(x==NULL)            return NULL;
         if(dta < x->data)      x->lc = remove(x->lc,dta);
@@ -119,6 +113,12 @@ public:
         parent->h = max(parent->lc->height(),parent->rc->height()) + 1;
         child->h = max(child->lc->height(),child->rc->height()) + 1;
         return child;
+    }
+    Node<T>* inorder_successor(Node<T> *x){
+        if(x->rc==NULL) return NULL;
+        x = x->rc;
+        while(x->lc!=NULL) x = x->lc;
+        return x;
     }
     void inorder(Node<T> *x){
         if(x==NULL) return;

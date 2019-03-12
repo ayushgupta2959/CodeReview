@@ -15,7 +15,7 @@ public:
     Node *lc;
     Node *rc;
     int h;
-    Node(T data,Node *lc,Node *rc){
+    Node(T data,Node<T> *lc,Node<T> *rc){
         this->data = data;
         this->lc = lc;
         this->rc = rc;
@@ -37,9 +37,9 @@ public:
         n=0;
     }
     Node<T>* insert(Node<T> *x,T dta){
-        if(x==NULL) return new Node<T>(dta,NULL,NULL);
-        if(x->data>dta)x->lc = insert(x->lc,dta);
-        else if(x->data<dta)x->rc = insert(x->rc,dta);
+        if(x==NULL)                 return new Node<T>(dta,NULL,NULL);
+        if(dta < x->data)           x->lc = insert(x->lc,dta);
+        else if(dta > x->data)      x->rc = insert(x->rc,dta);
         if(abs(x->lc->height() - x->rc->height())>1) x = balance(x);
         x->h = max(x->lc->height(),x->rc->height()) + 1;
         return x;
@@ -47,6 +47,33 @@ public:
     void insert(T dta){
         root = insert(root,dta);
         n++;
+    }
+    Node<T>* inorder_successor(Node<T> *x){
+        if(x->rc==NULL) return NULL;
+        x = x->rc;
+        while(x->lc!=NULL) x = x->lc;
+        return x;
+    }
+    Node<T>* remove(Node<T> *x,T dta){
+        if(x==NULL)            return NULL;
+        if(dta < x->data)      x->lc = remove(x->lc,dta);
+        else if(dta < x->data) x->rc = remove(x->rc,dta);
+        else{
+            if(x->lc==NULL&&x->rc==NULL) { delete(x);return NULL;}
+            else if(x->lc==NULL)         {Node<T> *xr = x->rc; delete(x);return xr;}
+            else if(x->rc==NULL)         {Node<T> *xl = x->lc; delete(x);return xl;}
+            else{
+                x->data = inorder_successor(x)->data;
+                x->rc=remove(x->rc,x->data);
+            }
+        }
+        if(abs(x->lc->height() - x->rc->height())>1) x = balance(x);
+        x->h = max(x->lc->height(),x->rc->height()) + 1;
+        return x;
+    }
+    void remove(T dta){
+        root = remove(root,dta);
+        n--;
     }
     Node<T>* balance(Node<T> *x){
         if(x->lc->height() - x->rc->height()>0){
@@ -59,7 +86,6 @@ public:
         }
         return x;
     }
-
     Node<T>* llc(Node<T> *x){
         x = right_rotate(x);
         return x;
@@ -73,7 +99,6 @@ public:
         x = left_rotate(x);
         return x;
     }
-
     Node<T>* rlc(Node<T> *x){
         x->rc = right_rotate(x->rc);
         x = left_rotate(x);
@@ -95,13 +120,11 @@ public:
         child->h = max(child->lc->height(),child->rc->height()) + 1;
         return child;
     }
-    /*Node<T>* remove(int dta){
-        if()
-    }*/
     void inorder(Node<T> *x){
         if(x==NULL) return;
         inorder(x->lc);
         cout<<"("<<x->data<<","<<x->height()<<") ";
+        inorder(x->rc);
     }
     void display_inorder(){
         inorder(root);
@@ -121,6 +144,26 @@ int main(){
     a.insert(4);
     a.display_inorder();
     a.insert(5);
+    a.insert(6);
+    a.insert(7);
+    a.display_inorder();
+    a.remove(4);
+    a.display_inorder();
+    a.remove(5);
+    a.display_inorder();
+    a.remove(6);
+    //after remove 6 two trees are possible
+    //it is implementation dependent that how one handle the case when x->lc->height()-x->rc->height()==0
+    a.display_inorder();
+    a.remove(3);
+    a.display_inorder();
+    a.remove(2);
+    a.display_inorder();
+    a.remove(7);
+    a.display_inorder();
+    a.remove(1);
+    a.display_inorder();
+    a.remove(7);
     a.display_inorder();
     return 0;
 }

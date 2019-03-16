@@ -14,15 +14,14 @@ int main(){
     while(t--){
         cin>>n;
         swps = 0;
-        //Method 1 TLE
-        /*
+        //Method 1
+
         for(int i=0;i<n;++i) cin>>v[i];
         for(int i=n-1;i>=0;--i){
             if((v[i]-i-1)>2) {cout<<"Too chaotic\n";swps = 0;break;}
-            for(int j=max(0,v[i]-2);j>=0;--j) if(v[j]>v[i]) swps++;
+            for(int j=max(0,v[i]-2);j<i;++j) if(v[j]>v[i]) swps++;
         }
         if(swps) cout<<swps<<"\n";
-            */
     }
     return 0;
 }

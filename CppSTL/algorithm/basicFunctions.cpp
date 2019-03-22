@@ -1,5 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
+bool comp1(pair<int,int> a,pair<int,int> b){
+    return a.first<b.first;
+}
+bool comp2(pair<int,int> a,pair<int,int> b){
+    return a.second<b.second;
+}
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -14,7 +20,6 @@ int main(){
     lower_bound()
     merge()
     sort()
-    min_element()
     */
     //next_permutation(range.begin(),range.end())
     int arr[4] = {1,2,3,4};
@@ -29,6 +34,23 @@ int main(){
     cout<<sum<<"\n";
 
     //min_element()
-    cout<<*min_element(arr,arr+n)<<"\n";
+    auto x = min_element(arr,arr+n);
+    cout<<*x<<"\n";
+
+    vector<pair<int,int>> vp;
+    vp.emplace_back(make_pair(1,2));
+    vp.emplace_back(make_pair(0,9));
+    vp.emplace_back(make_pair(2,0));
+    vp.emplace_back(make_pair(5,1));
+
+    auto y = min_element(vp.begin(),vp.end());
+    cout<<(*y).first<<" "<<(*y).second<<"\n";
+
+    y = min_element(vp.begin(),vp.end(),comp1);
+    cout<<(*y).first<<" "<<(*y).second<<"\n";
+
+    y = min_element(vp.begin(),vp.end(),comp2);
+    cout<<(*y).first<<" "<<(*y).second<<"\n";
+
     return 0;
 }

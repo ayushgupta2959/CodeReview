@@ -11,6 +11,7 @@ int main(){
     cin.tie(NULL);
     int r = 10;
     int c = 10;
+    //Method 1
     int **arr = new int*[r];
     for(int i=0;i<r;++i) arr[i] = new int[c];
     for(int i=0;i<r;++i){
@@ -22,6 +23,14 @@ int main(){
     for(int i=0;i<r;++i){
         for(int j=0;j<c;++j){
             cout<<arr[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+    //Method 2
+    vector<vector<int>> v(r,vector<int>(c));
+    for(int i=0;i<r;++i){
+        for(int j=0;j<c;++j){
+            cout<<v[i][j]<<" ";
         }
         cout<<"\n";
     }

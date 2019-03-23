@@ -7,14 +7,15 @@ using namespace std;
 #define vvll vector<vll>
 
 ll N,K;
-vll B(12),C(12);
-vvll T(12,vll(12));
-
+vll B(10),C(10);
+//Avoid creating large memory global
+//Example : if create T global then program shows segmentation fault
 vvll multiply(vvll a,vvll b){
     vvll res(K,vll(K));
     for(int m =0;m<K;++m){
         for(int n=0;n<K;++n){
-            for(int o = 0;o<K;o++){
+            res[m][n] = 0;
+            for(int o = 0;o<K;++o){
                 res[m][n] = (res[m][n] + (a[m][o]*b[o][n])%MOD)%MOD;
             }
         }
@@ -23,12 +24,13 @@ vvll multiply(vvll a,vvll b){
 }
 vvll power(vvll t,ll tn){
     if(tn == 1) return t;
-    vvll r = power(t,tn>>1);
-    r = multiply(r,r);
-    if(tn&1) r = multiply(r,t);
-    return r;
+    vvll x = power(t,tn>>1);
+    x = multiply(x,x);
+    if(tn&1) x = multiply(x,t);
+    return x;
 }
 ll solve(){
+    vvll T(K,vll(K));
     if(N<K) return B[N-1];
     for(int i=0;i<(K-1);++i){
         for(int j=0;j<K;++j){
@@ -49,10 +51,8 @@ ll solve(){
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
-    #endif
     int tc;
     cin>>tc;
     while(tc--){
@@ -61,6 +61,8 @@ int main(){
         for(int i=0;i<K;++i) cin>>C[i];
         cin>>N;
         cout<<solve()<<"\n";
+        B.clear();
+        C.clear();
     }
     return 0;
 }

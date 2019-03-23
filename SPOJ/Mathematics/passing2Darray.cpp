@@ -1,5 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
+void update2(vector<vector<int>> arr,int r,int c){
+    for(int i=0;i<r;++i){
+        for(int j=0;j<c;++j)
+            arr[i][j] = i+j;
+    }
+}
 void update(int **arr,int r,int c){
     for(int i=0;i<r;++i){
         for(int j=0;j<c;++j)
@@ -28,6 +34,7 @@ int main(){
     }
     //Method 2
     vector<vector<int>> v(r,vector<int>(c));
+    update2(v,r,c);
     for(int i=0;i<r;++i){
         for(int j=0;j<c;++j){
             cout<<v[i][j]<<" ";

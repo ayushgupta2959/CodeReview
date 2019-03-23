@@ -5,13 +5,17 @@ using namespace std;
 //F : F[i] stores frequency of (prefix_sum(1,i)%N) i.e. frequency of number 0 to N-1
 //N : stores number of elements
 ll A[100005],N,F[100005];
+//custom mod function to handle negative mod generated values
+ll mod(ll a,ll n){
+    return (a%n + n)%n;
+}
 ll solve(){
     memset(F,0, sizeof F);
     F[0] = 1;//for null sub array
     ll sum=0;
     for(int i=1;i<=N;++i){
         sum+=A[i];
-        F[sum%N]++;
+        F[mod(sum,N)]++;
     }
     sum=0;
     //Finding all combinations of sub arrays

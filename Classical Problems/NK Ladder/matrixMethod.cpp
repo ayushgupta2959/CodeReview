@@ -22,8 +22,8 @@ vector<vector<int>> power(vector<vector<int>> t,int tn,int k){
     return r;
 }
 int solve(int n,int k){
-    /*int f1[k] = {0};
-    f1[k-1] = 1;
+    /*int f0[k] = {0};
+    f0[k-1] = 1;
     */
     vector<vector<int>>t(k,vector<int>(k));
     for(int i=0;i<(k-1);++i){
@@ -35,6 +35,11 @@ int solve(int n,int k){
     for(int i=0;i<k;++i){
         t[k-1][i] = 1;
     }
+    /*
+    from f0 to fn total n+1 values and fornula would be fn = (t^n)*f0
+    since, in f0 all values are zero except k-1th term so after calculating t^n to find result
+    we need to return t[k-1][k-1]
+    */
     t = power(t,n,k);
     return t[k-1][k-1];
 }

@@ -9,7 +9,7 @@ using namespace std;int main(){
     string s;
     while(getline(cin,s)){
     int n = s.length();
-    int index = (1<<n) - 2;
+    int index = (1<<n) - 2;//finding count of lucky numbers with length less then n
     int t = 0;
     for(int i=0;i<n;++i){
         if(s[i]=='4') t = t<<1;

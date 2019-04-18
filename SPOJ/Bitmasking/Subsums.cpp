@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
+//O(2^(N/2)log(N/2))
 ll N,n1,n2,a,b;
 vector<ll> subsum(ll *s,int n){
     ll tsn = (1<<n);
@@ -46,7 +47,8 @@ int main(){
         u = b - s1[i];
         auto x1 = lower_bound(s2.begin(),s2.end(),l);
         auto x2 = upper_bound(s2.begin(),s2.end(),u);
-        res  += (x2-s2.begin()) - (x1-s2.begin());
+        res  += (x2-s2.begin()) - (x1-s2.begin()); //since upper_bound returns the value that is just greater than u
+                                                   // that is why no need to add one in res
     }
     cout<<res;
     return 0;
